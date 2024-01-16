@@ -79,7 +79,7 @@ app.get("/tours/:id", async(req,res)=>{
 
     try {
         const id = req.params.id;
-        const data = await userModel.findOne({_id:id}) 
+        const data = await userModel.find({_id:id}) 
         res.status(200).json( data )
 
     } catch (err) {
