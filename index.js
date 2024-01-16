@@ -37,8 +37,13 @@ const schemaData = mongoose.Schema({
 const userModel = mongoose.model("tour", schemaData)
 //read
 app.get("/tours", async(req, res) => {
-    const data = await userModel.find({})    
-    res.send( data )
+    try {
+        const data = await userModel.find({})    
+        res.status(200).json( data )
+
+    } catch (err) {
+        res.status(500).json( {message: 'server error'} )
+    }
 })
 
 //create data // save data
@@ -46,10 +51,7 @@ app.post("/create", async(req,res)=>{
     console.log(req.body)
     const data = new userModel(req.body)
     await data.save()
-    res.send({
-        success: true,
-        message: "Sata save succesfully"
-    })
+    res.status(200).json({ message : "data create successfully"})
 })
 
 //update
@@ -59,7 +61,7 @@ app.put("/update",async(req,res)=>{
 
     console.log(rest)
     const data = await userModel.updateOne({_id: id},rest)
-    res.send({success : true, message : "data update successfully"})
+    res.status(200).json({ message : "data update successfully"})
 })
 
 
@@ -67,7 +69,7 @@ app.put("/update",async(req,res)=>{
 app.delete("/delete/:id", async(req,res)=>{
     const id = req.params.id
     await userModel.deleteOne({_id : id })
-    res.send({success : true, message : "data delete successfully"})
+    res.status(200).json({ message : "data delete successfully"})
 
 })
 
@@ -76,7 +78,7 @@ app.delete("/delete/:id", async(req,res)=>{
 app.get("/getSingle/:id", async(req,res)=>{
     const id = req.params.id
     const data = await userModel.findOne({_id:id})
-    res.send({success : true, message: "successfully"})
+    res.json({success : true, message: "successfully", data})
 })
 
 //search
