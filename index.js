@@ -75,10 +75,10 @@ app.delete("/delete/:id", async(req,res)=>{
 
 
 //getSingle
-app.get("/getSingle/:id", async(req,res)=>{
+app.get("/tours/:id", async(req,res)=>{
 
     try {
-        const id = req.params.id
+        const id = req.params.id;
         const data = await userModel.findOne({_id:id}) 
         res.status(200).json( data )
 
