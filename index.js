@@ -76,9 +76,18 @@ app.delete("/delete/:id", async(req,res)=>{
 
 //getSingle
 app.get("/getSingle/:id", async(req,res)=>{
-    const id = req.params.id
-    const data = await userModel.findOne({_id:id})
-    res.json({success : true, message: "successfully", data})
+
+    try {
+        const id = req.params.id
+        const data = await userModel.findOne({_id:id}) 
+        res.status(200).json( data )
+
+    } catch (err) {
+        res.status(500).json( {message: 'server error'} )
+    }
+    // const id = req.params.id
+    // const data = await userModel.findOne({_id:id})
+    // res.json({success : true, message: "successfully", data})
 })
 
 //search
